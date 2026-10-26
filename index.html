@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plásticos y Materiales de Construcción | Tecnología 3º ESO</title>
+  
+  <!-- Tipografía moderna Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-app: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      
+      --plastic-primary: #0284c7;
+      --plastic-light: #e0f2fe;
+      --plastic-border: #bae6fd;
+      
+      --eco-primary: #059669;
+      --eco-light: #d1fae5;
+      --eco-border: #a7f3d0;
+
+      --const-primary: #d97706;
+      --const-light: #fef3c7;
+      --const-border: #fde68a;
+
+      --tech-primary: #7c3aed;
+      --tech-light: #f3e8ff;
+      --tech-border: #ddd6fe;
+
+      --success: #10b981;
+      --danger: #ef4444;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', system-ui, sans-serif; }
+    body { background-color: var(--bg-app); color: var(--text-main); line-height: 1.6; padding-bottom: 60px; }
+
+    /* Estilos de Impresión / PDF */
+    @media print {
+      header, nav, .btn-print, .quiz-section, .flashcard-section, .no-print { display: none !important; }
+      body { background: white !important; color: black !important; padding: 0 !important; }
+      .container { max-width: 100% !important; margin: 0 !important; }
+      .card { background: white !important; color: black !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; page-break-inside: avoid; }
+      .section-title { color: #0f172a !important; border-left-color: #0f172a !important; }
+      .grid-2, .grid-3, .grid-4 { display: block !important; }
+      .item-box { margin-bottom: 12px; page-break-inside: avoid; }
+    }
+
+    /* Cabecera Principal */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 28px; position: sticky; top: 0; z-index: 1000;
+      box-shadow: var(--shadow-sm);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-icon { font-size: 2.2rem; }
+    .brand h1 { font-size: 1.3rem; color: var(--text-main); font-weight: 800; }
+    .brand p { font-size: 0.82rem; color: var(--plastic-primary); font-weight: 700; }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    .btn-print {
+      background: linear-gradient(135deg, #059669, #10b981); color: white; border: none;
+      padding: 9px 18px; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
+      transition: all 0.2s;
+    }
+    .btn-print:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(5, 150, 105, 0.35); }
+
+    nav { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nav-btn {
+      background: #f1f5f9; border: 1px solid var(--border-color); color: var(--text-muted);
+      padding: 7px 13px; border-radius: 8px; text-decoration: none; font-size: 0.84rem; font-weight: 700;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover, .nav-btn.active { background: var(--plastic-primary); color: #ffffff; border-color: var(--plastic-primary); }
+
+    /* Layout General */
+    .container { max-width: 1100px; margin: 28px auto; padding: 0 16px; }
+
+    .section-title {
+      font-size: 1.45rem; color: var(--text-main); margin: 36px 0 18px 0; display: flex; align-items: center; gap: 10px;
+      border-left: 5px solid var(--plastic-primary); padding-left: 14px; font-weight: 800;
+    }
+    .title-eco { border-left-color: var(--eco-primary); }
+    .title-const { border-left-color: var(--const-primary); }
+    .title-tech { border-left-color: var(--tech-primary); }
+
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px;
+      margin-bottom: 22px; box-shadow: var(--shadow-sm); transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: var(--shadow-md); }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+
+    /* Tarjetas temáticas pastel */
+    .item-box { border-radius: 12px; padding: 16px; border: 1px solid var(--border-color); background: #f8fafc; transition: all 0.2s; }
+    .item-box:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); background: #ffffff; }
+    
+    .box-plastic { background: var(--plastic-light); border-color: var(--plastic-border); }
+    .box-eco { background: var(--eco-light); border-color: var(--eco-border); }
+    .box-const { background: var(--const-light); border-color: var(--const-border); }
+    .box-tech { background: var(--tech-light); border-color: var(--tech-border); }
+
+    .badge {
+      display: inline-block; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;
+      text-transform: uppercase; margin-bottom: 6px; background: #ffffff; color: var(--text-main);
+    }
+
+    /* Selector de Pestañas Interactivo */
+    .tab-bar { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+    .tab-btn {
+      background: #f1f5f9; border: 1px solid var(--border-color); color: var(--text-muted);
+      padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.85rem; white-space: nowrap;
+    }
+    .tab-btn.active { background: var(--plastic-primary); color: #ffffff; border-color: var(--plastic-primary); }
+
+    /* Flashcards y Quiz */
+    .flashcard {
+      background: #ffffff; border: 2px solid var(--plastic-primary); border-radius: 14px; padding: 22px; text-align: center;
+      min-height: 130px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    .quiz-option {
+      background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 16px; margin-bottom: 8px;
+      cursor: pointer; transition: all 0.2s; font-size: 0.9rem; text-align: left; width: 100%; color: #0f172a; font-weight: 600;
+    }
+    .quiz-option:hover { border-color: var(--plastic-primary); background: var(--plastic-light); }
+    .quiz-option.correct { background: #dcfce7; border-color: var(--success); color: #14532d; }
+    .quiz-option.wrong { background: #fee2e2; border-color: var(--danger); color: #7f1d1d; }
+  </style>
+</head>
+<body>
+
+  <!-- CABECERA PRINCIPAL -->
+  <header>
+    <div class="brand">
+      <span class="brand-icon">🧪🏗️</span>
+      <div>
+        <h1>Plásticos y Materiales de Construcción</h1>
+        <p>Tecnología y Digitalización • 3º ESO | Colegio La Hispanidad</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-print" onclick="window.print()">📥 Descargar / Imprimir Apuntes en PDF</button>
+      <nav>
+        <a href="#sec-historia" class="nav-btn active">1. Fundamentos</a>
+        <a href="#sec-tipos" class="nav-btn">2. Tipos de Plásticos</a>
+        <a href="#sec-fabricacion" class="nav-btn">3. Fabricación</a>
+        <a href="#sec-reciclaje" class="nav-btn">4. Reciclaje y ODS</a>
+        <a href="#sec-construccion" class="nav-btn">5. Construcción</a>
+        <a href="#sec-nuevos" class="nav-btn">6. Nuevos Materiales</a>
+        <a href="#sec-repaso" class="nav-btn">7. Repaso</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- SECCIÓN 1: HISTORIA Y FUNDAMENTOS -->
+    <section id="sec-historia">
+      <h2 class="section-title">1. Historia, Química y Propiedades de los Plásticos</h2>
+
+      <div class="card">
+        <h3 style="color: var(--plastic-primary); margin-bottom: 8px; font-weight: 800;">📜 Evolución Histórica de los Polímeros</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px;">Aunque hoy nos rodean polímeros sintéticos derivados del petróleo, la humanidad comenzó utilizando resinas naturales:</p>
+        
+        <div class="grid-4">
+          <div class="item-box">
+            <span class="badge" style="color: var(--const-primary);">Siglo XIII a.C.</span>
+            <h4 style="font-size:0.95rem; font-weight:800;">Laca China</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Extraída de la savia de árboles para recubrir e impermeabilizar vasijas.</p>
+          </div>
+          <div class="item-box">
+            <span class="badge" style="color: var(--eco-primary);">Siglo XIII d.C.</span>
+            <h4 style="font-size:0.95rem; font-weight:800;">Caucho Maya</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Uso del látex vegetal para impermeabilizar ropa y fabricar pelotas.</p>
+          </div>
+          <div class="item-box">
+            <span class="badge" style="color: var(--plastic-primary);">Siglo XIX (1860)</span>
+            <h4 style="font-size:0.95rem; font-weight:800;">Celuloide</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Primer plástico semisintético. Surgió al buscar un sustituto del marfil en bolas de billar.</p>
+          </div>
+          <div class="item-box">
+            <span class="badge" style="color: var(--tech-primary);">Siglo XX (1907)</span>
+            <h4 style="font-size:0.95rem; font-weight:800;">Baquelita</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Primer plástico 100% sintético termoestable. Aislante eléctrico y térmico irremplazable.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUÍMICA Y PROPIEDADES GENERALES -->
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color: var(--plastic-primary); margin-bottom: 8px; font-weight: 800;">🔬 ¿Qué es un Plástico? (Monómeros y Polímeros)</h3>
+          <p style="font-size: 0.88rem; color: #334155; margin-bottom: 10px;">
+            Los plásticos son materiales orgánicos formados por **polímeros** (macromoléculas compuestas por la unión repetida de moléculas más pequeñas llamadas **monómeros**).
+          </p>
+          <div style="background: var(--plastic-light); padding: 12px; border-radius: 10px; border: 1px solid var(--plastic-border); font-size: 0.84rem; color: #0369a1; font-weight: 600;">
+            🧪 <b>Proceso de Polimerización:</b> Se realiza en un reactor donde se mezclan los monómeros con un disolvente, un catalizador (acelerador químico), pigmentos y cargas de refuerzo (fibra de vidrio o carbono).
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="color: var(--eco-primary); margin-bottom: 8px; font-weight: 800;">🌟 Propiedades Generales de los Plásticos</h3>
+          <ul style="font-size: 0.85rem; color: #334155; padding-left: 18px; line-height: 1.7;">
+            <li><b>Aislantes eléctricos y térmicos:</b> No conducen la electricidad ni transmiten el calor rápido (cables, mangos de sartenes).</li>
+            <li><b>Relación resistencia/peso:</b> Son muy ligeros pero mecánicamente resistentes.</li>
+            <li><b>Resistencia química:</b> Soportan ácidos, lejías y corrosión sin destruirse.</li>
+            <li><b>Gran moldearse y flexibilidad:</b> Se ablandan con calor y presión facilitando formas complejas.</li>
+            <li><b>Económicos:</b> Muy baratos de fabricar masivamente frente a los metales.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: TIPOS DE PLÁSTICOS -->
+    <section id="sec-tipos">
+      <h2 class="section-title">2. Clasificación: Termoplásticos, Termoestables y Elastómeros</h2>
+
+      <div class="card">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="showPlasticTab('termoplasticos', this)">🔥 Termoplásticos (1-7 SPI)</button>
+          <button class="tab-btn" onclick="showPlasticTab('termoestables', this)">🧱 Termoestables</button>
+          <button class="tab-btn" onclick="showPlasticTab('elastomeros', this)">🎈 Elastómeros</button>
+          <button class="tab-btn" onclick="showPlasticTab('fibras', this)">🧵 Fibras Sintéticas</button>
+        </div>
+
+        <!-- PESTAÑA 1: TERMOPLÁSTICOS -->
+        <div id="tab-termoplasticos">
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">
+            Sus cadenas moleculares **no están entrelazadas**. Se ablandan al calentarse, se moldean y se vuelven a endurecer al enfriarse. **Son fácil e infinitamente reciclables.**
+          </p>
+
+          <div class="grid-3">
+            <div class="item-box box-plastic">
+              <span class="badge" style="color: var(--plastic-primary);">01 • PET</span>
+              <h4 style="font-size:0.92rem; font-weight:800;">Polietileno Tereftalato</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Transparente e impermeable a gases. Usado en botellas de agua, refrescos y aceite.</p>
+            </div>
+            <div class="item-box box-plastic">
+              <span class="badge" style="color: var(--plastic-primary);">02 • HDPE</span>
+              <h4 style="font-size:0.92rem; font-weight:800;">Polietileno Alta Densidad</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Rígido, resistente a impactos y corrosión. Flota en agua. Usado en tapones, cubos y cascos.</p>
+            </div>
+            <div class="item-box box-plastic">
+              <span class="badge" style="color: var(--plastic-primary);">03 • PVC</span>
+              <h4 style="font-size:0.92rem; font-weight:800;">Policloruro de Vinilo</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Muy duro y resistente al fuego (no arde solo). Usado en tuberías, marcos de ventana y mangueras.</p>
+            </div>
+            <div class="item-box box-plastic">
+              <span class="badge" style="color: var(--plastic-primary);">04 • LDPE</span>
+              <h4 style="font-size:0.92rem; font-weight:800;">Polietileno Baja Densidad</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Muy flexible y blando. Flota en agua y es económico. Usado en bolsas, film adhesivo y botes estrujables.</p>
+            </div>
+            <div class="item-box box-plastic">
+              <span class="badge" style="color: var(--plastic-primary);">05 • PP</span>
+              <h4 style="font-size:0.92rem; font-weight:800;">Polipropileno</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Resiste dobladuras repetidas (material bisagra) y calor (150ºC). Usado en tupperwares, jeringuillas y cuerdas.</p>
+            </div>
+            <div class="item-box box-plastic">
+              <span class="badge" style="color: var(--plastic-primary);">06 • PS</span>
+              <h4 style="font-size:0.92rem; font-weight:800;">Poliestireno (Rígido / Expandido)</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Rígido frágil (yogures, carcasas) o Expandido/Porexpán (corcho blanco para embalajes y aislamiento).</p>
+            </div>
+            <div class="item-box box-plastic">
+              <span class="badge" style="color: var(--plastic-primary);">PC / PMMA / PTFE</span>
+              <h4 style="font-size:0.92rem; font-weight:800;">Otros Termoplásticos Técnicos</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);"><b>PC:</b> Policarbonato (CDs, cascos). <b>PMMA:</b> Metacrilato (faros, mamparas). <b>PTFE:</b> Teflón antiadherente.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 2: TERMOESTABLES -->
+        <div id="tab-termoestables" style="display: none;">
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">
+            Sus cadenas moleculares están **entrecruzadas con enlaces fuertes**. Solo se moldean una vez con calor. Si se vuelven a calentar, se queman sin fundirse. **Su reciclaje es complejo.**
+          </p>
+          <div class="grid-3">
+            <div class="item-box box-const">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--const-primary);">Baquelita (PF)</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Dura, frágil y excelente aislante eléctrico/térmico. Usada en mangos de sartenes, enchufes y teléfonos antiguos.</p>
+            </div>
+            <div class="item-box box-const">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--const-primary);">Melamina (MF)</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Resistente a productos químicos y calor. Usada en recubrimiento de tableros de cocina, vajillas y encimeras.</p>
+            </div>
+            <div class="item-box box-const">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--const-primary);">Resina Epoxi (EP)</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Adhesivo bi-componente ultra resistente. Usada para unir hormigón/acero y pintar suelos de talleres/garajes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 3: ELASTÓMEROS -->
+        <div id="tab-elastomeros" style="display: none;">
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">
+            Sus moléculas forman una **red elástica con pocos enlaces**. Soportan grandes deformaciones por estiramiento y recuperan su forma original.
+          </p>
+          <div class="grid-3">
+            <div class="item-box box-eco">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--eco-primary);">Caucho (CA)</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Natural (látex) o sintético. Vulcanizado para dar resistencia. Usado en neumáticos, suelas y guantes.</p>
+            </div>
+            <div class="item-box box-eco">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--eco-primary);">Neopreno (PCP)</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Resistente a aceites y calor. Usado en trajes de buceo y apoyos antisísmicos en puentes y edificios.</p>
+
+            </div>
+            <div class="item-box box-eco">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--eco-primary);">Silicona (SI) / Poliuretano</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);"><b>Silicona:</b> Inerte y flexible a alta temperatura (moldes de horno, prótesis). <b>PUR:</b> Espumas aislantes (colchones, esponjas).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 4: FIBRAS SINTÉTICAS -->
+        <div id="tab-fibras" style="display: none;">
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">
+            Polímeros hilados para sustituir o mejorar las fibras naturales (algodón, lana, seda):
+          </p>
+          <div class="grid-3">
+            <div class="item-box box-tech">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--tech-primary);">Nailon y Poliéster</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);"><b>Nailon:</b> Muy fuerte y flexible (medias, cuerdas, paracaídas). <b>Poliéster:</b> Secado ultrarrápido (ropa deportiva, mochilas).</p>
+            </div>
+            <div class="item-box box-tech">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--tech-primary);">Elastano (Lycra)</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Elastómero textil mezclado para prendas ajustadas, bañadores y corsetería.</p>
+            </div>
+            <div class="item-box box-tech">
+              <h4 style="font-size:0.92rem; font-weight:800; color:var(--tech-primary);">Kevlar</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Poliamida ultra-resistente (2 veces más fuerte que el acero y 8 veces más tenaz). Usada en chalecos antibalas y guantes anticorte.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: FABRICACIÓN Y UNIÓN -->
+    <section id="sec-fabricacion">
+      <h2 class="section-title">3. Técnicas de Fabricación y Unión de Plásticos</h2>
+
+      <div class="card">
+        <h3 style="color: var(--plastic-primary); margin-bottom: 10px; font-weight: 800;">⚙️ Procesos de Moldeo y Conformación</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">Según la forma del objeto final se utiliza un método industrial distinto:</p>
+
+        <div class="grid-3">
+          <div class="item-box">
+            <h4 style="color:var(--plastic-primary); font-size:0.9rem; font-weight:800;">1. Extrusión</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Un tornillo sin fin empuja el plástico fundido por una boquilla. Para perfiles continuos, tubos y barras.</p>
+          </div>
+          <div class="item-box">
+            <h4 style="color:var(--plastic-primary); font-size:0.9rem; font-weight:800;">2. Moldeo por Inyección</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Se inyecta plástico líquido a presión dentro de un molde cerrado. Para piezas complejas (carcasas, juguetes, cubiertos).</p>
+          </div>
+          <div class="item-box">
+            <h4 style="color:var(--plastic-primary); font-size:0.9rem; font-weight:800;">3. Moldeo por Soplado</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Se inyecta aire a presión dentro de un tubo fundido para pegarlo a las paredes del molde. Para objetos huecos (botellas, bidones).</p>
+          </div>
+          <div class="item-box">
+            <h4 style="color:var(--plastic-primary); font-size:0.9rem; font-weight:800;">4. Moldeo por Compresión</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Usado en termoestables. Se comprime polvo caliente entre dos moldes macho/hembra (tapas de inodoro, mangos).</p>
+          </div>
+          <div class="item-box">
+            <h4 style="color:var(--plastic-primary); font-size:0.9rem; font-weight:800;">5. Conformado al Vacío</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Una lámina caliente se adapta al molde al succionar el aire de debajo. Para hueveras, envases y salpicaderos.</p>
+          </div>
+          <div class="item-box">
+            <h4 style="color:var(--plastic-primary); font-size:0.9rem; font-weight:800;">6. Calandrado e Hilado</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);"><b>Calandrado:</b> Rodillos calientes para láminas/manteles. <b>Hilado:</b> Sale por duchas para hilos textiles.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TÉCNICAS DE UNIÓN -->
+      <div class="card">
+        <h3 style="color: var(--const-primary); margin-bottom: 8px; font-weight: 800;">🔧 Uniones Fijas y Desmontables</h3>
+        <div class="grid-3">
+          <div class="item-box">
+            <b>Desmontables:</b> Tornillos pasantes con arandelas (evitan roturas) y tuercas.
+          </div>
+          <div class="item-box">
+            <b>Adhesivos:</b> Cianocrilato (Super Glue instantáneo), Resina Epoxi (Araldit bi-componente) y Pegamento Termofusible.
+          </div>
+          <div class="item-box">
+            <b>Soldaduras / Térmico:</b> Soldadura por alta frecuencia, aire caliente o sellado por perfil térmico (bolsas de supermercado).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: RECICLAJE Y ODS -->
+    <section id="sec-reciclaje">
+      <h2 class="section-title title-eco">4. Reciclaje de Plásticos y Proyecto ODS</h2>
+
+      <div class="card">
+        <h3 style="color: var(--eco-primary); margin-bottom: 8px; font-weight: 800;">♻️ Los 3 Tipos de Reciclado Industrial</h3>
+        <div class="grid-3">
+          <div class="item-box box-eco">
+            <h4 style="color:var(--eco-primary); font-weight:800;">1. Reciclado Mecánico</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Lavado, triturado en granza y extrusión para fabricar nuevos productos (tuberías, macetas, bolsas).</p>
+          </div>
+          <div class="item-box box-eco">
+            <h4 style="color:var(--eco-primary); font-weight:800;">2. Reciclado Químico</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Descomposición molecular mediante calor o reactivos para recuperar los monómeros originales purificados.</p>
+          </div>
+          <div class="item-box box-eco">
+            <h4 style="color:var(--eco-primary); font-weight:800;">3. Reciclado Energético</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Incineración controlada de residuos plásticos no reciclables en calderas para generar electricidad.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SITUACIÓN DE APRENDIZAJE HUERTO VERTICAL -->
+      <div class="card" style="border-left: 5px solid var(--eco-primary);">
+        <h3 style="color: var(--eco-primary); margin-bottom: 6px; font-weight: 800;">🌱 Proyecto Situación de Aprendizaje: Huerto Vertical Reutilizable</h3>
+        <p style="font-size: 0.88rem; color: #334155; margin-bottom: 10px;">
+          En consonancia con los **ODS 9 (Innovación), ODS 11 (Ciudades Sostenibles) y ODS 12 (Consumo Responsable)**:
+        </p>
+        <div class="grid-2">
+          <div style="font-size:0.82rem; color:#334155;">
+            <b>• Materiales Reutilizados:</b> Botellas de PET, garrafas de agua, tubos de PVC reciclados y sustrato orgánico.<br>
+            <b>• Diseño Estructural:</b> Disposición en cascada para maximizar el aprovechamiento del riego e iluminación natural.
+          </div>
+          <div style="font-size:0.82rem; color:#334155;">
+            <b>• Beneficios Ambientales:</b> Aislamiento térmico/acústico en fachadas, absorción de $CO_2$ y reducción del efecto isla de calor.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: MATERIALES DE CONSTRUCCIÓN -->
+    <section id="sec-construccion">
+      <h2 class="section-title title-const">5. Materiales de Construcción</h2>
+
+      <div class="card">
+        <h3 style="color: var(--const-primary); margin-bottom: 10px; font-weight: 800;">🏢 Clasificación de Materiales de Construcción</h3>
+        <div class="grid-4">
+          <div class="item-box box-const">
+            <h4 style="font-size:0.88rem; font-weight:800; color:var(--const-primary);">Pétreos Naturales</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Granito, Mármol, Pizarra, Caliza y Gravas. Extraídos directamente de canteras.</p>
+          </div>
+          <div class="item-box box-const">
+            <h4 style="font-size:0.88rem; font-weight:800; color:var(--const-primary);">Aglomerantes</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Yeso, Cal y Cemento. Al mezclarse con agua fraguan y se endurecen fijando materiales.</p>
+          </div>
+          <div class="item-box box-const">
+            <h4 style="font-size:0.88rem; font-weight:800; color:var(--const-primary);">Cerámicos y Vidrio</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Ladrillos, Tejas, Azulejos (arcilla cocida) y Vidrio plano (arena de sílice fundida).</p>
+          </div>
+          <div class="item-box box-const">
+            <h4 style="font-size:0.88rem; font-weight:800; color:var(--const-primary);">Compuestos</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Hormigón (cemento + agua + grava + arena) y Hormigón Armado (con barras de acero interiores).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 6: NUEVOS MATERIALES -->
+    <section id="sec-nuevos">
+      <h2 class="section-title title-tech">6. Nuevos Materiales de Alta Tecnología</h2>
+
+      <div class="card">
+        <h3 style="color: var(--tech-primary); margin-bottom: 10px; font-weight: 800;">🚀 Materiales del Futuro</h3>
+        <div class="grid-2">
+          <div class="item-box box-tech">
+            <h4 style="color:var(--tech-primary); font-weight:800;">🧵 Fibra de Carbono</h4>
+            <p style="font-size:0.82rem; color:var(--text-muted);">Filamentos de carbono (5-10 µm) combinados con resina epoxi. Ultraligera, rígida, ignífuga y anticorrosiva. Usada en aeronaves, coches de F1 y bicicletas de alta gama.</p>
+          </div>
+          <div class="item-box box-tech">
+            <h4 style="color:var(--tech-primary); font-weight:800;">⚛️ Grafeno</h4>
+            <p style="font-size:0.82rem; color:var(--text-muted);">Lámina de carbono de 1 átomo de grosor. Transparente, 200 veces más fuerte que el acero, 5 veces más ligero que el aluminio y super conductor térmico/eléctrico.</p>
+          </div>
+          <div class="item-box box-tech">
+            <h4 style="color:var(--tech-primary); font-weight:800;">🌐 Fibra Óptica</h4>
+            <p style="font-size:0.82rem; color:var(--text-muted);">Hilos transparentes de vidrio/plástico que transmiten pulsos de luz (láser/LED) a alta velocidad sin pérdidas electromagnéticas. Monomodo o Multimodo.</p>
+          </div>
+          <div class="item-box box-tech">
+            <h4 style="color:var(--tech-primary); font-weight:800;">📱 Cristal Líquido (LCD)</h4>
+            <p style="font-size:0.82rem; color:var(--text-muted);">Sustancia que fluye como líquido pero orienta sus moléculas con un campo eléctrico, regulando el paso de la luz en pantallas de televisión y móviles.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 7: AUTOEVALUACIÓN -->
+    <section id="sec-repaso" class="no-print">
+      <h2 class="section-title">7. Zona de Repaso y Autoevaluación</h2>
+
+      <!-- FLASHCARDS -->
+      <div class="card flashcard-section">
+        <h3 style="color: var(--plastic-primary); margin-bottom: 10px; font-weight: 800;">🎴 Flashcard de Repaso Rápido</h3>
+        <div class="flashcard" id="flashcardBox" onclick="rotateFlashcard()">
+          <span style="font-size: 0.75rem; color: var(--plastic-primary); font-weight: 800; margin-bottom: 4px;">CLIC PARA MOSTRAR LA RESPUESTA</span>
+          <h3 id="flashQ" style="font-size: 1.1rem; color: #0f172a; font-weight: 800;">¿Cuál fue el primer plástico 100% sintético y termoestable de la historia?</h3>
+          <p id="flashA" style="font-size: 1rem; color: #059669; font-weight: 800; display: none; margin-top: 6px;">La BAQUELITA (1907)</p>
+        </div>
+        <button onclick="nextFlashcard()" style="margin-top: 12px; background: var(--plastic-primary); color: #ffffff; border: none; padding: 9px 18px; border-radius: 8px; font-weight: 800; cursor: pointer;">Siguiente Pregunta ➔</button>
+      </div>
+
+      <!-- MINI QUIZ -->
+      <div class="card quiz-section">
+        <h3 style="color: var(--eco-primary); margin-bottom: 10px; font-weight: 800;">📝 Cuestionario Rápido de 5 Preguntas</h3>
+        
+        <div id="quizContainer">
+          <p style="font-weight: 800; font-size: 0.95rem; margin-bottom: 12px;" id="quizQText">1. ¿Qué plástico se utiliza principalmente en tuberías y marcos de ventanas por su rigidez e incombustibilidad?</p>
+          <div id="quizOptions"></div>
+        </div>
+        
+        <div id="quizResult" style="margin-top: 14px; font-weight: 800; font-size: 1.05rem; color: var(--success); display: none;"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Navegación de pestañas de tipos de plásticos
+    function showPlasticTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.getElementById('tab-termoplasticos').style.display = 'none';
+      document.getElementById('tab-termoestables').style.display = 'none';
+      document.getElementById('tab-elastomeros').style.display = 'none';
+      document.getElementById('tab-fibras').style.display = 'none';
+
+      document.getElementById('tab-' + tabId).style.display = 'block';
+    }
+
+    // Sistema Flashcards
+    const flashcards = [
+      { q: "¿Cuál fue el primer plástico 100% sintético y termoestable de la historia?", a: "La BAQUELITA (1907)" },
+      { q: "¿Qué polímero textil es 2 veces más resistente que el acero y 8 veces más tenaz?", a: "El KEVLAR" },
+      { q: "¿Qué técnica de moldeo inyecta aire comprimido para fabricar botellas huecas?", a: "Moldeo por SOPLADO" },
+      { q: "¿Qué material de 1 átomo de carbono es 200 veces más fuerte que el acero?", a: "El GRAFENO" },
+      { q: "¿Qué plástico lleva el código de reciclaje número 1?", a: "El PET (Polietileno Tereftalato)" }
+    ];
+    let currentFlash = 0;
+
+    function rotateFlashcard() {
+      const a = document.getElementById('flashA');
+      a.style.display = (a.style.display === 'none') ? 'block' : 'none';
+    }
+
+    function nextFlashcard() {
+      currentFlash = (currentFlash + 1) % flashcards.length;
+      document.getElementById('flashQ').textContent = flashcards[currentFlash].q;
+      document.getElementById('flashA').textContent = flashcards[currentFlash].a;
+      document.getElementById('flashA').style.display = 'none';
+    }
+
+    // Sistema Quiz
+    const quizData = [
+      { q: "1. ¿Qué plástico se utiliza principalmente en tuberías y marcos de ventanas por su rigidez e incombustibilidad?", opts: ["A) PVC (Policloruro de vinilo)", "B) LDPE (Baja densidad)", "C) Poliestireno"], correct: 0 },
+      { q: "2. Las moléculas de los plásticos TERMOESTABLES se caracterizan por...", opts: ["A) No estar unidas", "B) Estar entrecruzadas con enlaces fuertes", "C) Estar en forma de muelles"], correct: 1 },
+      { q: "3. ¿Qué técnica de fabricación hace pasar plástico fundido por una boquilla continua para hacer tubos?", opts: ["A) Extrusión", "B) Soplado", "C) Compresión"], correct: 0 },
+      { q: "4. ¿Qué adhesivo de dos componentes es ideal para unir hormigón con acero o pintar garajes?", opts: ["A) Cianocrilato", "B) Resina Epoxi", "C) Cola de contacto"], correct: 1 },
+      { q: "5. ¿En qué consiste el reciclado MECÁNICO de los plásticos?", opts: ["A) Incinerar para electricidad", "B) Lavar, triturar en granza y volver a extruir", "C) Romper moléculas químicamente"], correct: 1 }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function renderQuiz() {
+      const q = quizData[currentQ];
+      document.getElementById('quizQText').textContent = q.q;
+      const optsDiv = document.getElementById('quizOptions');
+      optsDiv.innerHTML = '';
+
+      q.opts.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.textContent = opt;
+        btn.onclick = () => answerQuiz(idx);
+        optsDiv.appendChild(btn);
+      });
+    }
+
+    function answerQuiz(selected) {
+      const q = quizData[currentQ];
+      if (selected === q.correct) score++;
+
+      currentQ++;
+      if (currentQ < quizData.length) {
+        renderQuiz();
+      } else {
+        document.getElementById('quizContainer').style.display = 'none';
+        const res = document.getElementById('quizResult');
+        res.style.display = 'block';
+        res.textContent = `🎉 ¡Cuestionario finalizado! Resultado: ${score} de ${quizData.length} aciertos.`;
+      }
+    }
+
+    window.onload = renderQuiz;
+  </script>
+</body>
+</html>
